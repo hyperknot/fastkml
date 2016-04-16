@@ -344,6 +344,8 @@ class Geometry(_BaseObject):
         if element.tag == ('%sLineString' % self.ns):
             coords = self._get_coordinates(element)
             self._get_geometry_spec(element)
+            if len(coords) == 1:
+                return Point(coords[0])
             return LineString(coords)
         if element.tag == ('%sPolygon' % self.ns):
             self._get_geometry_spec(element)

@@ -110,7 +110,15 @@ class KML(object):
                 feature = Placemark(ns)
                 feature.from_element(placemark)
                 self.append(feature)
+
+        elif element.tag.endswith('Document'):
+            ns = element.tag.rstrip('Document')
+            feature = Document(ns)
+            feature.from_element(element)
+            self.append(feature)
+
         else:
+            logger.warning(u'unknown document tag: {}'.format(element.tag))
             raise TypeError
 
     def etree_element(self):

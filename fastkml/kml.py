@@ -1095,6 +1095,9 @@ class Placemark(_Feature):
             geom.from_element(multigeometry)
             self._geometry = geom
             return
+
+        children = [c.tag for c in element.getchildren()]
+        logger.warning(u'Geometries found: {}'.format(children))
         raise ValueError('No geometries found')
 
     def etree_element(self):

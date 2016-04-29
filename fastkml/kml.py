@@ -63,6 +63,8 @@ except NameError:
     # Python 3
     basestring = unicode = str
 
+from lxml import etree
+
 
 class KML(object):
     """ represents a KML File """
@@ -1106,6 +1108,7 @@ class Placemark(_Feature):
 
         children = [c.tag for c in element.getchildren()]
         logger.warning(u'Geometries found: {}'.format(children))
+        logger.info(u'etree.tostring: {}'.format(etree.tostring(element, pretty_print=True)))
         raise ValueError('No geometries found')
 
     def etree_element(self):

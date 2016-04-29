@@ -39,7 +39,7 @@ except ImportError:
     from pygeoif.geometry import MultiPoint, MultiLineString, MultiPolygon
     from pygeoif.geometry import LinearRing
     from pygeoif.geometry import GeometryCollection
-    from pygeoif.geometry import as_shape as asShape
+    from pygeoif.geometry import as_shape as asShape  # noqa
 
 import re
 import fastkml.config as config
@@ -374,7 +374,10 @@ class Geometry(_BaseObject):
             if linestrings:
                 for ls in linestrings:
                     self._get_geometry_spec(ls)
-                    geoms.append(LineString(self._get_coordinates(ls)))
+                    coords = self._get_coordinates(ls)
+                    if len(coords) == 1:
+                        return Point(coords[0])
+                    geoms.append(LineString(coords))
             polygons = element.findall('%sPolygon' % self.ns)
             if polygons:
                 for polygon in polygons:

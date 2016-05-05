@@ -1107,7 +1107,7 @@ class Placemark(_Feature):
             return
 
         children = [c.tag for c in element.getchildren()]
-        logger.warning(u'Geometries found: {}'.format(children))
+        logger.info(u'Geometries found: {}'.format(children))
         logger.info(u'etree.tostring: {}'.format(etree.tostring(element, pretty_print=True)))
         raise ValueError('No geometries found')
 

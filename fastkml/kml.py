@@ -1111,7 +1111,7 @@ class Placemark(_Feature):
 
         children = [c.tag for c in element.getchildren()]
         logger.info(u'Geometries found: {}'.format(children))
-        logger.info(u'etree.tostring: {}'.format(etree.tostring(element, pretty_print=True)))
+        # logger.info(u'etree.tostring: {}'.format(etree.tostring(element, pretty_print=True)))
         raise ValueError('No geometries found')
 
     def etree_element(self):
@@ -1456,7 +1456,7 @@ class Data(_XMLObject):
         super(Data, self).from_element(element)
         self.name = element.get('name')
         value = element.find('%svalue' % self.ns)
-        if value:
+        if value is not None:
             self.value = value.text
         else:
             self.value = ''

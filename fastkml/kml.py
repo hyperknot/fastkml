@@ -579,9 +579,12 @@ class _Feature(_BaseObject):
             self._time_stamp = s
         atom_link = element.find('%slink' % atom.NS)
         if atom_link is not None:
-            s = atom.Link()
-            s.from_element(atom_link)
-            self._atom_link = s
+            try:
+                s = atom.Link()
+                s.from_element(atom_link)
+                self._atom_link = s
+            except Exception:
+                pass
         atom_author = element.find('%sauthor' % atom.NS)
         if atom_author is not None:
             s = atom.Author()
@@ -1452,7 +1455,11 @@ class Data(_XMLObject):
     def from_element(self, element):
         super(Data, self).from_element(element)
         self.name = element.get('name')
-        self.value = element.find('%svalue' % self.ns).text
+        value = element.find('%svalue' % self.ns)
+        if value:
+            self.value = value.text
+        else:
+            self.value = ''
         display_name = element.find('%sdisplayName' % self.ns)
         if display_name is not None:
             self.display_name = display_name.text
